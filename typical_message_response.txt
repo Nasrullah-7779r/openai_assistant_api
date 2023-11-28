@@ -1,0 +1,28 @@
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "msg_hc5Bzw6i1lxZwCWlcn33qh79",
+      "object": "thread.message",
+      "created_at": 1700825550,
+      "thread_id": "thread_GeQiEAtK0PbpRtqNaykfw7oy",
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": {
+            "value": "I need to solve the equation `3x + 11 = 14`. Can you help me?",
+            "annotations": []
+          }
+        }
+      ],
+      "file_ids": [],
+      "assistant_id": null,
+      "run_id": null,
+      "metadata": {}
+    }
+  ],
+  "first_id": "msg_hc5Bzw6i1lxZwCWlcn33qh79",
+  "last_id": "msg_hc5Bzw6i1lxZwCWlcn33qh79",
+  "has_more": false
+}

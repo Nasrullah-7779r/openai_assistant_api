@@ -1,0 +1,46 @@
+import os
+from fastapi import APIRouter, status, HTTPException
+from openai import OpenAI
+from execute_once import assistant, thread
+from helper_methods import print_final_messages, wait_for_run
+
+key=os.getenv('OPENAI_API_KEY')
+
+client = OpenAI(api_key=key)
+
+router = APIRouter(tags=["Math Tutor"])
+
+@router.get('/ask_query/{query}', status_code=status.HTTP_202_ACCEPTED)
+async def ask_query(query: str):
+
+# 3 step --> pass message to that thread with user role & content
+    message = client.beta.threads.messages.create(
+    thread_id=thread["id"],
+    role="user",
+    content= query
+    )
+
+    #  4 step --> run the assistant on thread
+    run = client.beta.threads.runs.create(
+    thread_id=thread["id"],
+    assistant_id=assistant["id"],
+    instructions="Please address the user as Jane Doe. The user has a premium account."
+    )
+
+    #  5 step --> check the run status by retrieve
+    run = wait_for_run(client, run, thread)
+    if run == None:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="run status failed")
+
+    if run == -1:
+          raise HTTPException(status_code=status.HTTP_408_REQUEST_TIMEOUT, detail="run has taken more time than usuall")  
+   
+    # 6 step --> display the Assistant's response
+    messages = client.beta.threads.messages.list(
+    thread_id=thread["id"]
+    )
+    # return {"messages":"success"}
+    return messages
+    # print_final_messages(messages)
+
+
