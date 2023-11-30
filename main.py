@@ -1,17 +1,9 @@
-import os
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from openai import OpenAI
-from helper_methods import print_final_messages
-from routers import math_tutor
+from routers import file_assistant, math_tutor
 
-key=os.getenv('OPENAI_API_KEY')
-
-client = OpenAI(api_key=key)
-
-app = FastAPI(debug=True)
-
+app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
 
@@ -20,12 +12,17 @@ def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
+@app.get("/file_assistant", response_class=HTMLResponse)
+def file_assistnt(request: Request):
+    return templates.TemplateResponse("file_assistant.html", {"request": request})
+
 
 # @app.get('/')
 # def test():
 #     return {"test":"success"}
 
 app.include_router(router=math_tutor.router)
+app.include_router(router=file_assistant.router)
 
 # To debug FastAPI
 # if __name__ == "__main__":

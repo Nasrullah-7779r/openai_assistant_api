@@ -1,12 +1,9 @@
 import os
 from fastapi import APIRouter, status, HTTPException
 from openai import OpenAI
-from execute_once import assistant, thread
+from execute_once import assistant2, thread, client
 from helper_methods import print_final_messages, wait_for_run
 
-key=os.getenv('OPENAI_API_KEY')
-
-client = OpenAI(api_key=key)
 
 router = APIRouter(tags=["Math Tutor"])
 
@@ -23,7 +20,7 @@ async def ask_query(query: str):
     #  4 step --> run the assistant on thread
     run = client.beta.threads.runs.create(
     thread_id=thread["id"],
-    assistant_id=assistant["id"],
+    assistant_id=assistant2["id"],
     instructions="Please address the user as Jane Doe. The user has a premium account."
     )
 

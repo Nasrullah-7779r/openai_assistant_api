@@ -65,10 +65,8 @@ textarea {
     )
     .then(response => response.json())
     .then(data => {
-
-        raw_text_data=JSON.stringify(data)
-        
-        assistant_response = raw_text_data[0].role + "\n" + raw_text_data[0].content[0].text.value
+     
+        assistant_response = data.data[0].role + "\n" + data.data[0].content[0].text.value
 
         document.getElementById('output').value = assistant_response;
         // alert('API Response: ' + JSON.stringify(data));
@@ -95,6 +93,8 @@ Please enter your query: <input  type="text" id="customInputBox" placeholder="Qu
 <br><br><br>
 
 <textarea name="outputBox" id="output" cols="30" rows="10"></textarea>
+
+<p>If you want to ask something from file assitant, then click <a href="/file_assistant">here</a> </p>
 
 
 

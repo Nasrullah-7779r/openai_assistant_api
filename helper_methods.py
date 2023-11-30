@@ -9,6 +9,7 @@ def add_message_to_thread(client, content, thread):
     thread_id=thread["id"],
     role="user",
     content=content
+    
     )
     return message  
 
@@ -50,7 +51,7 @@ def wait_for_run(client, run, thread):
         
         i=i+1
         # await asyncio.sleep(5)
-        time.sleep(5)
+        # time.sleep(5)
         
         if(i==12):
             return -1   # means its getting more time than usuall
